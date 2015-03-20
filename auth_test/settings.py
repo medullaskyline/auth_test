@@ -49,14 +49,18 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-######################
+CLOUD_BASE_URL = "https://isb-cgc.appspot.com"
+LOCAL_BASE_URL = "http://localhost:8080"
+
+##########################
 # For django-userena_app #
-######################
+##########################
+
 INSTALLED_APPS += (
     'userena_app',
-    'guardian',
-    'easy_thumbnails',
-    'userena'
+    # 'guardian',
+    # 'easy_thumbnails',
+    # 'userena'
 )
 
 AUTHENTICATION_BACKENDS = (
@@ -77,21 +81,49 @@ ANONYMOUS_USER_ID = -1
 
 AUTH_PROFILE_MODULE = 'userena_app.MyProfile'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'userena_db',
-        'USER': 'root',
-        'PASSWORD': 'password'
+if os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine'):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'HOST': '/cloudsql/test-authentic:auth-test-cloudsql-instance',
+            'NAME': 'userena_db',
+            'USER': 'root'
+        }
     }
-}
+    API_BASE = CLOUD_BASE_URL
+    SITE_ID = 4  # test-authentic.appspot.com
+
+elif os.getenv('SETTINGS_MODE') == 'prod':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'HOST': '173.194.249.186',
+            'NAME': 'userena_db',
+            'USER': 'root',
+            'PASSWORD': 'password'
+        }
+    }
+    API_BASE = LOCAL_BASE_URL
+    SITE_ID = 3  # localhost:8080
+
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'userena_db',
+            'USER': 'root',
+            'PASSWORD': 'password'
+        }
+    }
+    API_BASE = LOCAL_BASE_URL
+    SITE_ID = 3  # localhost:8080
 
 USERENA_SIGNIN_REDIRECT_URL = '/userena_app/%(username)s/'
 LOGIN_URL = '/userena_app/signin/'
 LOGOUT_URL = '/userena_app/signout/'
 LOGIN_REDIRECT_URL = '/userena_app/profile/'
 
-SITE_ID = 2
+
 
 USERENA_SIGNIN_AFTER_SIGNUP = True
 
@@ -99,13 +131,12 @@ MIDDLEWARE_CLASSES += ('userena.middleware.UserenaLocaleMiddleware',)
 
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates'),
-    # os.path.join(os.path.join(BASE_DIR, 'lib', 'userena', 'templates'))
     )
 
 
-######################
+##########################
 # End django-userena_app #
-######################
+##########################
 
 
 

@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
-from userena.models import UserenaBaseProfile, UserenaManager, UserenaBaseProfileManager, UserenaSignup, upload_to_mugshot
+from userena.models import UserenaBaseProfile  # , UserenaSignup  # , upload_to_mugshot, UserenaManager, UserenaBaseProfileManager,
 
 
 class MyProfile(UserenaBaseProfile):
