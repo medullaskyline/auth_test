@@ -1,7 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
-from userena.models import UserenaBaseProfile  # , UserenaSignup  # , upload_to_mugshot, UserenaManager, UserenaBaseProfileManager,
+from userena.models import UserenaBaseProfile
+# from userena.models import  UserenaSignup, upload_to_mugshot, UserenaManager, UserenaBaseProfileManager,
+# from guardian.models import UserObjectPermission
 
 
 class MyProfile(UserenaBaseProfile):

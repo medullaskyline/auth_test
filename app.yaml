@@ -16,6 +16,8 @@ builtins:
 libraries:
 - name: MySQLdb
   version: "latest"
+- name: PIL
+  version: "latest"
 
 env_variables:
   DJANGO_SETTINGS_MODULE: 'auth_test.settings'

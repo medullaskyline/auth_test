@@ -9,7 +9,9 @@ Comparison of [django-userena](https://github.com/bread-and-pepper/django-useren
 Currently the site_id is set to 2, where the site is localhost:8888.  
 Run the program on port 8888.
 
-Migrate the database before running.
+Uncomment 'guardian', 'easy_thumbnails', and 'userena' in INSTALLED_APPS in auth_test/settings.py, migrate the database, then re-comment them.
+
+To use email verification, run add_site_ids.py.
 
 ##### dependencies
 

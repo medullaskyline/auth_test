@@ -58,9 +58,9 @@ LOCAL_BASE_URL = "http://localhost:8080"
 
 INSTALLED_APPS += (
     'userena_app',
-    # 'guardian',
-    # 'easy_thumbnails',
-    # 'userena'
+    'guardian',
+    'easy_thumbnails',
+    'userena'
 )
 
 AUTHENTICATION_BACKENDS = (

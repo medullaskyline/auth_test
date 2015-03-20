@@ -20,8 +20,8 @@ def real_main():
   """Main program."""
   # Run the WSGI CGI handler with that application.
   util.run_wsgi_app(application)
-  print '\n\ndjango.apps.registry.Apps.app_configs'
-  print Apps.app_configs
+  # print '\n\ndjango.apps.registry.Apps.app_configs'
+  # print Apps.app_configs
 
 
 # Set this to profile_main to enable profiling.
