@@ -4,7 +4,7 @@ Comparison of [django-userena](https://github.com/bread-and-pepper/django-useren
 
 #### django-userena
 
-Live site is [here](http://http://test-authentic.appspot.com/).
+Live site is [here](http://http://test-authentic.appspot.com/userena_app).
 
 ##### how to run locally
 
