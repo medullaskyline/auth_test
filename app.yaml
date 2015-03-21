@@ -12,6 +12,9 @@ handlers:
 - url: /static/admin
   static_dir: static/admin
   expiration: 0
+- url: /robots.txt
+  static_files: static/robots.txt
+  upload: static/robots.txt
 
 builtins:
 - django_wsgi: on
@@ -20,6 +23,8 @@ libraries:
 - name: MySQLdb
   version: "latest"
 - name: PIL
+  version: "latest"
+- name: ssl
   version: "latest"
 
 env_variables:
