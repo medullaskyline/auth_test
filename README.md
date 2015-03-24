@@ -22,15 +22,16 @@ To use email verification, run add_site_ids.py and run the program with one of t
 
 When run locally, the SITE_ID settings variable is 3, which should correspond to localhost:8080.
 
-links: 
-* /userena_app to see a list of profiles
-* /userena_app/signup to create a profile
-* /userena_app/signin to sign in
-* /userena_app/signout to sign out
-
 if /userena_app/signup gives the error "Permission matching query does not exist", run permissions_fix.py.
 
 
 ##### dependencies
 
 Instructions for installing userena are [here](http://django-userena.readthedocs.org/en/latest/installation.html).
+
+
+#### django-allauth
+
+##### dependencies
+
+Instructions for installing django-allauth are [here](http://django-allauth.readthedocs.org/en/latest/installation.html).
