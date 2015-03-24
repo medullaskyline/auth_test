@@ -12,13 +12,13 @@ Create a mysql database called userena_db with a root password 'password'.
 
 Run migrations on userena, userena_app, guardian, and easy_thumbnails.
 ```
-$ SETTINGS_MODE = 'prod' python manage.py migrate
+$ SETTINGS_MODE='prod' python manage.py migrate
 ```
 
 To use email verification, run add_site_ids.py and run the program with one of the following:
-* dev_appserver.py
-* python manage.py runserver 8080
-* SETTINGS_MODE='prod' python manage.py runserver 8080
+    dev_appserver.py
+    python manage.py runserver 8080
+    SETTINGS_MODE='prod' python manage.py runserver 8080
 
 When run locally, the SITE_ID settings variable is 3, which should correspond to localhost:8080.
 
