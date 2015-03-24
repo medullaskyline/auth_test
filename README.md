@@ -8,19 +8,21 @@ Live site is [here](http://http://test-authentic.appspot.com/userena_app).
 
 ##### how to run locally
 
-To use email verification, run add_site_ids.py.
-When run locally, the site_id will be 3, where the site is localhost:8080.
-
 Create a mysql database called userena_db with a root password 'password'.
 
 Run migrations on userena, userena_app, guardian, and easy_thumbnails.
+```
+$ SETTINGS_MODE = 'prod' python manage.py migrate
+```
 
-It can be run with 
+To use email verification, run add_site_ids.py and run the program with one of the following:
 * dev_appserver.py
 * python manage.py runserver 8080
 * SETTINGS_MODE='prod' python manage.py runserver 8080
 
-go to 
+When run locally, the SITE_ID settings variable is 3, which should correspond to localhost:8080.
+
+links: 
 * /userena_app to see a list of profiles
 * /userena_app/signup to create a profile
 * /userena_app/signin to sign in
