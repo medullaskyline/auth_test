@@ -22,4 +22,15 @@
     {% endblock %}
   </div>
 </body>
+<footer>
+    {% block footer %}
+        {% if user.is_authenticated %}
+            Logged in as {{ user.username }}.
+            <a href="/userena_app/signout">Sign Out</a>
+        {% else %}
+            <a href="/userena_app/signin">Sign In</a>
+            <a href="/userena_app/signup">Register</a>
+        {% endif %}
+    {% endblock %}
+</footer>
 </html>
