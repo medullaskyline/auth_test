@@ -49,13 +49,50 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-CLOUD_BASE_URL = "https://isb-cgc.appspot.com"
+CLOUD_BASE_URL = "https://test-authentic.appspot.com"
 LOCAL_BASE_URL = "http://localhost:8080"
 
-##########################
-# For django-userena_app #
-##########################
+ROOT_URLCONF = 'auth_test.urls'
 
+WSGI_APPLICATION = 'auth_test.wsgi.application'
+
+
+# Internationalization
+# https://docs.djangoproject.com/en/1.7/topics/i18n/
+
+LANGUAGE_CODE = 'en-us'
+
+TIME_ZONE = 'UTC'
+
+USE_I18N = True
+
+USE_L10N = True
+
+USE_TZ = True
+
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.7/howto/static-files/
+
+# Absolute path to the directory static files should be collected to.
+# Don't put anything in this directory yourself; store your static files
+# in apps' "static/" subdirectories and in STATICFILES_DIRS.
+# Example: "/home/media/media.lawrence.com/static/"
+STATIC_ROOT = '/static/'
+
+# URL prefix for static files.
+# Example: "http://media.lawrence.com/static/"
+STATIC_URL = '/static/'
+
+TEMPLATE_CONTEXT_PROCESSORS = ('django.contrib.auth.context_processors.auth',)
+
+TEMPLATE_DIRS = (
+    os.path.join(BASE_DIR, 'templates'),
+    )
+
+##########################
+#     For userena_app    #
+##########################
 
 INSTALLED_APPS += (
     'userena_app',
@@ -131,61 +168,26 @@ USERENA_SIGNIN_AFTER_SIGNUP = True
 
 MIDDLEWARE_CLASSES += ('userena.middleware.UserenaLocaleMiddleware',)
 
-TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR, 'templates'),
+
+##########################
+#     End userena_app    #
+#    Start allauth_app   #
+##########################
+
+INSTALLED_APPS += (
+    'allauth_app',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google')
+
+TEMPLATE_CONTEXT_PROCESSORS += ('allauth.socialaccount.context_processors.socialaccount',)
+
+TEMPLATE_DIRS += (
+    os.path.join(BASE_DIR, 'templates', 'allauth_app'),
     )
 
-
 ##########################
-# End django-userena_app #
+#     End allauth_app    #
 ##########################
 
-
-
-ROOT_URLCONF = 'auth_test.urls'
-
-WSGI_APPLICATION = 'auth_test.wsgi.application'
-
-
-# Internationalization
-# https://docs.djangoproject.com/en/1.7/topics/i18n/
-
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
-
-USE_I18N = True
-
-USE_L10N = True
-
-USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.7/howto/static-files/
-
-# Absolute path to the directory static files should be collected to.
-# Don't put anything in this directory yourself; store your static files
-# in apps' "static/" subdirectories and in STATICFILES_DIRS.
-# Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = '/static/'
-
-# URL prefix for static files.
-# Example: "http://media.lawrence.com/static/"
-STATIC_URL = '/static/'
-
-# Additional locations of static files
-STATICFILES_DIRS = (
-    # Put strings here, like "/home/html/static" or "C:/www/django/static".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-    os.path.join(BASE_DIR, 'static'),
-)
-
-# List of finder classes that know how to find static files in
-# various locations.
-STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'django.contrib.staticfiles.finders.DefaultStorageFinder',
-)
