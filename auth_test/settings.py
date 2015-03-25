@@ -199,16 +199,10 @@ AUTHENTICATION_BACKENDS += (
     "allauth.account.auth_backends.AuthenticationBackend",
 )
 
-SOCIALACCOUNT_PROVIDERS =\
-    {
-        'google':
-            {
-                'SCOPE': ['email', 'publish_stream'],
-                'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
-                'METHOD': 'oauth2',
-                'LOCALE_FUNC': 'path.to.callable'
-            }
-    }
+SOCIALACCOUNT_PROVIDERS = \
+    { 'google':
+        { 'SCOPE': ['profile', 'email'],
+          'AUTH_PARAMS': { 'access_type': 'online' } }}
 
 ##########################
 #     End allauth_app    #
