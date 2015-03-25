@@ -4,7 +4,8 @@
 # keys
 *.pem
 *.p12
-
+client_secrets.json
+git
 # Distribution / packaging
 .Python
 env/

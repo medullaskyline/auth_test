@@ -181,11 +181,34 @@ INSTALLED_APPS += (
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google')
 
-TEMPLATE_CONTEXT_PROCESSORS += ('allauth.socialaccount.context_processors.socialaccount',)
+TEMPLATE_CONTEXT_PROCESSORS += (
+    'allauth.socialaccount.context_processors.socialaccount',
+    "allauth.account.context_processors.account",
+    'django.core.context_processors.request'
+)
 
 TEMPLATE_DIRS += (
     os.path.join(BASE_DIR, 'templates', 'allauth_app'),
     )
+
+AUTHENTICATION_BACKENDS += (
+    # Needed to login by username in Django admin, regardless of `allauth`
+    "django.contrib.auth.backends.ModelBackend",
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
+
+SOCIALACCOUNT_PROVIDERS =\
+    {
+        'google':
+            {
+                'SCOPE': ['email', 'publish_stream'],
+                'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
+                'METHOD': 'oauth2',
+                'LOCALE_FUNC': 'path.to.callable'
+            }
+    }
 
 ##########################
 #     End allauth_app    #
