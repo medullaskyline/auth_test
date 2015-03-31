@@ -90,35 +90,7 @@ TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates'),
     )
 
-##########################
-#     For userena_app    #
-##########################
-
-INSTALLED_APPS += (
-    'userena_app',
-    'guardian',
-    'easy_thumbnails',
-    'userena'
-)
-
-AUTHENTICATION_BACKENDS = (
-    'userena.backends.UserenaAuthenticationBackend',
-    'guardian.backends.ObjectPermissionBackend',
-    'django.contrib.auth.backends.ModelBackend',
-)
-
-# EMAIL_BACKEND = 'django.core.mail.console.EmailBackend'  # backends.dummy.EmailBackend'
-
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'testymctest02@gmail.com'
-EMAIL_HOST_PASSWORD = 'MyNewPass'
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-
-ANONYMOUS_USER_ID = -1
-
-AUTH_PROFILE_MODULE = 'userena_app.MyProfile'
+# ANONYMOUS_USER_ID = -1
 
 if os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine'):
     DATABASES = {
@@ -157,22 +129,12 @@ else:
     API_BASE = LOCAL_BASE_URL
     SITE_ID = 3  # localhost:8080
 
-USERENA_SIGNIN_REDIRECT_URL = '/userena_app/%(username)s/'
-LOGIN_URL = '/userena_app/signin/'
-LOGOUT_URL = '/userena_app/signout/'
-LOGIN_REDIRECT_URL = '/'  # userena_app/profile/'
-
-
-
-USERENA_SIGNIN_AFTER_SIGNUP = True
-
-MIDDLEWARE_CLASSES += ('userena.middleware.UserenaLocaleMiddleware',)
-
 
 ##########################
-#     End userena_app    #
-#    Start accounts   #
+#      Start accounts    #
 ##########################
+
+LOGIN_REDIRECT_URL = '/'
 
 INSTALLED_APPS += (
     'accounts',
@@ -191,12 +153,13 @@ TEMPLATE_DIRS += (
     os.path.join(BASE_DIR, 'templates', 'accounts'),
     )
 
-AUTHENTICATION_BACKENDS += (
+AUTHENTICATION_BACKENDS = (
     # Needed to login by username in Django admin, regardless of `allauth`
     "django.contrib.auth.backends.ModelBackend",
 
     # `allauth` specific authentication methods, such as login by e-mail
     "allauth.account.auth_backends.AuthenticationBackend",
+    'django.contrib.auth.backends.ModelBackend'
 )
 
 SOCIALACCOUNT_PROVIDERS = \
