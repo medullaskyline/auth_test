@@ -1,3 +1,5 @@
 from django.shortcuts import render
 
-# from allauth.account.views
+
+def allauth_profiles(request):
+    return render(request, 'allauth_app/allauth_base.html')

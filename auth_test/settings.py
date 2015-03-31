@@ -160,7 +160,7 @@ else:
 USERENA_SIGNIN_REDIRECT_URL = '/userena_app/%(username)s/'
 LOGIN_URL = '/userena_app/signin/'
 LOGOUT_URL = '/userena_app/signout/'
-LOGIN_REDIRECT_URL = '/userena_app/profile/'
+LOGIN_REDIRECT_URL = '/'  # userena_app/profile/'
 
 
 
@@ -183,8 +183,8 @@ INSTALLED_APPS += (
 
 TEMPLATE_CONTEXT_PROCESSORS += (
     'allauth.socialaccount.context_processors.socialaccount',
-    "allauth.account.context_processors.account",
-    'django.core.context_processors.request'
+    'allauth.account.context_processors.account',
+    'django.core.context_processors.request',
 )
 
 TEMPLATE_DIRS += (
@@ -202,7 +202,11 @@ AUTHENTICATION_BACKENDS += (
 SOCIALACCOUNT_PROVIDERS = \
     { 'google':
         { 'SCOPE': ['profile', 'email'],
-          'AUTH_PARAMS': { 'access_type': 'online' } }}
+          'AUTH_PARAMS': { 'access_type': 'online' }
+        }
+    }
+
+# SOCIALACCOUNT_QUERY_EMAIL = True
 
 ##########################
 #     End allauth_app    #

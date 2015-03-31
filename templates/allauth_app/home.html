@@ -1,0 +1,8 @@
+{% extends "allauth_base.html" %}
+
+{% block body %}
+    allauth home
+    {% if user.is_authenticated %}
+    {{ user.username }}
+    {% endif %}
+{% endblock %}
