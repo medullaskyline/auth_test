@@ -171,11 +171,11 @@ MIDDLEWARE_CLASSES += ('userena.middleware.UserenaLocaleMiddleware',)
 
 ##########################
 #     End userena_app    #
-#    Start allauth_app   #
+#    Start accounts   #
 ##########################
 
 INSTALLED_APPS += (
-    'allauth_app',
+    'accounts',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -188,7 +188,7 @@ TEMPLATE_CONTEXT_PROCESSORS += (
 )
 
 TEMPLATE_DIRS += (
-    os.path.join(BASE_DIR, 'templates', 'allauth_app'),
+    os.path.join(BASE_DIR, 'templates', 'accounts'),
     )
 
 AUTHENTICATION_BACKENDS += (
@@ -209,6 +209,6 @@ SOCIALACCOUNT_PROVIDERS = \
 # SOCIALACCOUNT_QUERY_EMAIL = True
 
 ##########################
-#     End allauth_app    #
+#     End accounts    #
 ##########################
 
