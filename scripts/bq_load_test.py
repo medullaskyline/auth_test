@@ -280,6 +280,11 @@ def loadTable(service, projectId, datasetId, targetTableId, sourceCSV):
                         'datasetId': datasetId,
                         'tableId': targetTableId
                     },
+                    'skipLeadingRows': 1,
+                    'maxBadRecords': 1000000000,
+                    'allowQuotedNewlines': True,
+                    'allowJaggedRows': True,
+                    'ignoreUnknownValues': True
                 }
             }
         }
@@ -322,10 +327,11 @@ def main():
     http = credentials.authorize(http)
 
 
+    # todo: make a dataset and table?
     service = build('bigquery', 'v2', http=http)
     projectId = '982660750330'
     datasetId = 'dataset01'
-    targetTableId = 'table01'
+    targetTableId = 'table03'
     sourceCSV = ['gs://test-authentic-bucket01/clinMut_62_v2.csv']
     loadTable(service, projectId, datasetId, targetTableId, sourceCSV)
 
