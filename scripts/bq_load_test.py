@@ -15,7 +15,7 @@ def loadTable(service, projectId, datasetId, targetTableId, sourceCSV):
     try:
         jobCollection = service.jobs()
         jobData = {
-            'projectId': projectId,
+            'projectId': projectId,  # why isn't this in jobReference nested object?
             'configuration': {
                 'load': {
                     'sourceUris': sourceCSV,
@@ -285,8 +285,26 @@ def loadTable(service, projectId, datasetId, targetTableId, sourceCSV):
                     'allowQuotedNewlines': True,
                     'allowJaggedRows': True,
                     'ignoreUnknownValues': True
-                }
-            }
+                },
+                # 'copy': {},
+                # 'dryRun': <boolean>,
+                # 'extract': {},
+                # 'link': {},
+                # 'query': {
+                #     'allowLargeResults': True,
+                #     'destinationTable': {
+                #         'datasetId': datasetId,
+                #         'projectId': projectId,
+                #         'tableId': 'query_table01',
+                #     },
+                #     'query': 'SELECT sample, gender, disease_code from [] limit 10'
+                # },
+
+
+            }  # end configuration
+            # 'selfLink': <url used to access teh resource again -- can use in GET requests for the resource
+            # 'statistics': {}
+            # 'status': {}
         }
         insertResponse = jobCollection.insert(projectId=projectId,
                                               body=jobData).execute()
@@ -331,7 +349,7 @@ def main():
     service = build('bigquery', 'v2', http=http)
     projectId = '982660750330'
     datasetId = 'dataset01'
-    targetTableId = 'table03'
+    targetTableId = 'table01'
     sourceCSV = ['gs://test-authentic-bucket01/clinMut_62_v2.csv']
     loadTable(service, projectId, datasetId, targetTableId, sourceCSV)
 
