@@ -131,7 +131,7 @@ else:
 
 
 ##########################
-#      Start accounts    #
+#  Start django-allauth  #
 ##########################
 
 LOGIN_REDIRECT_URL = '/'
@@ -159,7 +159,6 @@ AUTHENTICATION_BACKENDS = (
 
     # `allauth` specific authentication methods, such as login by e-mail
     "allauth.account.auth_backends.AuthenticationBackend",
-    'django.contrib.auth.backends.ModelBackend'
 )
 
 SOCIALACCOUNT_PROVIDERS = \
@@ -169,9 +168,8 @@ SOCIALACCOUNT_PROVIDERS = \
         }
     }
 
-# SOCIALACCOUNT_QUERY_EMAIL = True
 
 ##########################
-#     End accounts    #
+#   End django-allauth   #
 ##########################
 

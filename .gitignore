@@ -5,6 +5,8 @@
 *.pem
 *.p12
 client_secrets.json
+*.dat
+
 git
 # Distribution / packaging
 .Python
@@ -60,4 +62,7 @@ target/
 
 # library
 allauth/
+
+*.csv
+*.txt
 

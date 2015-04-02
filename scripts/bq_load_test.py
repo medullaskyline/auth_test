@@ -49,9 +49,6 @@ def loadTable(service, projectId, datasetId, targetTableId, sourceCSV):
             }
         }
 
-        print "\nprint jobData['configuration']['load']['sourceUris']"
-        print jobData['configuration']['load']['sourceUris']
-
         insertResponse = jobCollection.insert(projectId=projectId,
                                               body=jobData).execute()
 
@@ -63,12 +60,14 @@ def loadTable(service, projectId, datasetId, targetTableId, sourceCSV):
                 print 'Done Loading!'
                 return
 
-        print 'Waiting for loading to complete...'
-        time.sleep(10)
+            if 'errorResult' in job['status']:
+                print 'Error loading table: ', pprint.pprint(job)
+                return
 
-        if 'errorResult' in job['status']:
-            print 'Error loading table: ', pprint.pprint(job)
-            return
+            print 'Waiting for loading to complete...'
+            time.sleep(10)
+
+
 
     except HTTPError as err:
         print 'Error in loadTable: ', pprint.pprint(err.resp)  # or err.reason?
