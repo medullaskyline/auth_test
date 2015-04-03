@@ -8,7 +8,6 @@ import os
 from oauth2client.client import flow_from_clientsecrets, AccessTokenRefreshError
 from oauth2client.file import Storage
 from oauth2client import tools
-import json
 
 
 # Loads the table from Google Cloud Storage and prints the table.
@@ -72,75 +71,10 @@ def main():
     service = build('bigquery', 'v2', http=http)
     projectId = '982660750330'
     datasetId = 'dataset01'
-    destinationTableId = 'query_table02'
+    destinationTableId = 'query_table03'
     queryStr = 'SELECT sample, gender, disease_code from [dataset01.table01] limit 10;'
     queryTable(service, projectId, datasetId, destinationTableId, queryStr)
 
 
 if __name__ == '__main__':
     main()
-
-# columns in clinMut_62_v2
-# 'sample'
-# 'percent_lymphocyte_infiltration'
-# 'percent_monocyte_infiltration'
-# 'percent_necrosis'
-# 'percent_neutrophil_infiltration'
-# 'percent_normal_cells'
-# 'percent_stromal_cells'
-# 'percent_tumor_cells'
-# 'percent_tumor_nuclei'
-# 'gender'
-# 'history_of_neoadjuvant_treatment'
-# 'icd_o_3_histology'
-# 'prior_dx'
-# 'vital_status'
-# 'country'
-# 'disease_code'
-# 'histological_type'
-# 'icd_10'
-# 'icd_o_3_site'
-# 'tumor_tissue_site'
-# 'tumor_type'
-# 'age_at_initial_pathologic_diagnosis'
-# 'days_to_birth'
-# 'days_to_initial_pathologic_diagnosis'
-# 'year_of_initial_pathologic_diagnosis'
-# 'days_to_last_known_alive'
-# 'tumor_necrosis_percent'
-# 'tumor_nuclei_percent'
-# 'tumor_weight'
-# 'person_neoplasm_cancer_status'
-# 'pathologic_N'
-# 'radiation_therapy'
-# 'pathologic_T'
-# 'race'
-# 'days_to_last_followup'
-# 'ethnicity'
-# 'TP53'
-# 'RB1'
-# 'NF1'
-# 'APC'
-# 'CTNNB1'
-# 'PIK3CA'
-# 'PTEN'
-# 'FBXW7'
-# 'NRAS'
-# 'ARID1A'
-# 'CDKN2A'
-# 'SMAD4'
-# 'BRAF'
-# 'NFE2L2'
-# 'IDH1'
-# 'PIK3R1'
-# 'HRAS'
-# 'EGFR'
-# 'BAP1'
-# 'KRAS'
-# 'sampleType'
-# 'DNAseq_data'
-# 'mirnPlatform'
-# 'cnvrPlatform'
-# 'methPlatform'
-# 'gexpPlatform'
-# 'rppaPlatform'
