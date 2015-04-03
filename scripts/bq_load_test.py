@@ -334,6 +334,7 @@ def main():
 
     flow = flow_from_clientsecrets(client_secrets_path,
                                    scope='https://www.googleapis.com/auth/bigquery')
+
     storage = Storage('bigquery_credentials.dat')
     credentials = storage.get()
 
@@ -349,7 +350,7 @@ def main():
     service = build('bigquery', 'v2', http=http)
     projectId = '982660750330'
     datasetId = 'dataset01'
-    targetTableId = 'table01'
+    targetTableId = 'table02'
     sourceCSV = ['gs://test-authentic-bucket01/clinMut_62_v2.csv']
     loadTable(service, projectId, datasetId, targetTableId, sourceCSV)
 
