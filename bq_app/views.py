@@ -9,8 +9,9 @@ from oauth2client.client import flow_from_clientsecrets, AccessTokenRefreshError
 # from oauth2client.appengine import OAuth2DecoratorFromClientSecrets
 from oauth2client.file import Storage
 from oauth2client import tools
+import json
 
-# GOOGLE_APPLICATION_CREDENTIALS =
+GOOGLE_APPLICATION_CREDENTIALS = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'Authentication-Test-key.json')
 
 CLIENT_SECRETS_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'client_secrets.json')
 # decorator = OAuth2DecoratorFromClientSecrets(CLIENT_SECRETS_PATH, scope='https://www.googleapis.com/auth/bigquery')
@@ -41,11 +42,10 @@ def queryTable(service, projectId, datasetId, destinationTableId, queryStr, http
         jobCollection = service.jobs()
         # note: other instance methods are datasets(), projects(), tabledata(), and tables()
         # https://developers.google.com/resources/api-libraries/documentation/bigquery/v2/python/latest/
-        print '\njobCollection'
-        print jobCollection
+
         print '\n'
         jobData = {
-            'projectId': projectId,  # why isn't this in jobReference nested object?
+            'projectId': projectId,
             'configuration': {
                 'query': {
                     'allowLargeResults': True,
@@ -59,10 +59,7 @@ def queryTable(service, projectId, datasetId, destinationTableId, queryStr, http
             }
         }
 
-        query_response = jobCollection.insert(projectId=projectId, body=jobData).execute(http)
-
-        print '\nquery_response:'
-        print query_response
+        query_response = jobCollection.insert(projectId=projectId, body=jobData).execute()
 
         # Ping for status until it is done, with a short pause between calls.
         while True:
@@ -110,14 +107,17 @@ def authorize_credentials_with_jwt():
 
 
 def authorize_credentials_with_Google():
+    # documentation: https://developers.google.com/accounts/docs/application-default-credentials
+    # this way of getting credentials works in production but not development
     SCOPES = ['https://www.googleapis.com/auth/bigquery']
     credentials = GoogleCredentials.get_application_default().create_scoped(SCOPES)
-    credentials = GoogleCredentials.from_stream('Authentication-Test-key.json')
+    # this way of getting credentials at least works in development
+    # credentials = GoogleCredentials.from_stream(GOOGLE_APPLICATION_CREDENTIALS).create_scoped(SCOPES)
 
     http = httplib2.Http()
     http = credentials.authorize(http)
 
-    service = build('bigquery', 'v2', http=http)
+    service = build('bigquery', 'v2', http=http)  # )  credentials=credentials# ... better?
 
     return service
 
@@ -125,9 +125,6 @@ def authorize_credentials_with_Google():
 def bq_home(request):
 
     service = authorize_credentials_with_Google()
-
-    print '\nservice'
-    print service
 
     projectId = '982660750330'
     datasetId = 'dataset01'
