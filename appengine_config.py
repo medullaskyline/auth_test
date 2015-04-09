@@ -2,7 +2,6 @@ import sys
 import os
 
 sys.path.append(os.path.join(os.getcwd(), "lib", "allauth.zip"))
-sys.path.append(os.path.join(os.getcwd(), "lib", "apiclient.zip"))
 sys.path.append(os.path.join(os.getcwd(), "lib", "django.zip"))
 sys.path.append(os.path.join(os.getcwd(), "lib", "httplib2.zip"))
 sys.path.append(os.path.join(os.getcwd(), "lib", "googleapiclient.zip"))
