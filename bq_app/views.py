@@ -5,36 +5,10 @@ from apiclient.discovery import build
 import httplib2
 import time
 import os
-from oauth2client.client import flow_from_clientsecrets, AccessTokenRefreshError, SignedJwtAssertionCredentials, GoogleCredentials
-# from oauth2client.appengine import OAuth2DecoratorFromClientSecrets
-from oauth2client.file import Storage
-from oauth2client import tools
-import json
+from oauth2client.client import GoogleCredentials, AccessTokenRefreshError #, flow_from_clientsecrets, SignedJwtAssertionCredentials,
+
 
 GOOGLE_APPLICATION_CREDENTIALS = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'Authentication-Test-key.json')
-
-CLIENT_SECRETS_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'client_secrets.json')
-# decorator = OAuth2DecoratorFromClientSecrets(CLIENT_SECRETS_PATH, scope='https://www.googleapis.com/auth/bigquery')
-
-
-def authorize_credentials():
-
-    flow = flow_from_clientsecrets(CLIENT_SECRETS_PATH, scope='https://www.googleapis.com/auth/bigquery')
-    storage = Storage('bigquery_credentials.dat')
-    credentials = storage.get()
-
-    if credentials is None or credentials.invalid:
-        print '\nRun oauth2 flow with default arguments.'
-        credentials = tools.run_flow(flow, storage, tools.argparser.parse_args([]))
-    else:
-        print '\ncredentials valid'
-
-    http = httplib2.Http()
-    http = credentials.authorize(http)
-
-    service = build('bigquery', 'v2', http=http)  # developerKey, model
-
-    return service
 
 
 def queryTable(service, projectId, datasetId, destinationTableId, queryStr, http=None):
@@ -84,35 +58,15 @@ def queryTable(service, projectId, datasetId, destinationTableId, queryStr, http
                "the application to re-authorize")
 
 
-def authorize_credentials_with_jwt():
-
-    PROJECT_NUMBER = '982660750330'
-    SERVICE_ACCOUNT_EMAIL = "982660750330-88vug9a5ojumrrqksb7dndfevb4lg2q9@developer.gserviceaccount.com"
-
-    f = file('Authentication-Test-key.pem', 'rb')  # notasecret
-    key = f.read()
-    f.close()
-
-    credentials = SignedJwtAssertionCredentials(
-        SERVICE_ACCOUNT_EMAIL,
-        key,
-        scope='https://www.googleapis.com/auth/bigquery')
-
-    http = httplib2.Http()
-    http = credentials.authorize(http)
-
-    service = build('bigquery', 'v2')  # , http=http)
-
-    return service, http
-
-
 def authorize_credentials_with_Google():
     # documentation: https://developers.google.com/accounts/docs/application-default-credentials
-    # this way of getting credentials works in production but not development
     SCOPES = ['https://www.googleapis.com/auth/bigquery']
-    credentials = GoogleCredentials.get_application_default().create_scoped(SCOPES)
-    # this way of getting credentials at least works in development
-    # credentials = GoogleCredentials.from_stream(GOOGLE_APPLICATION_CREDENTIALS).create_scoped(SCOPES)
+    if os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine') or os.getenv('SETTINGS_MODE') == 'prod':
+        # this way of getting credentials works in production but not development
+        credentials = GoogleCredentials.get_application_default().create_scoped(SCOPES)
+    else:
+        # this way of getting credentials at least works in development
+        credentials = GoogleCredentials.from_stream(GOOGLE_APPLICATION_CREDENTIALS).create_scoped(SCOPES)
 
     http = httplib2.Http()
     http = credentials.authorize(http)
@@ -133,3 +87,54 @@ def bq_home(request):
     queryTable(service, projectId, datasetId, destinationTableId, queryStr)
 
     return render(request, 'bq_app/bq_home.html')
+
+
+# deprecated functions
+# from oauth2client.appengine import OAuth2DecoratorFromClientSecrets
+# from oauth2client.file import Storage
+# from oauth2client import tools
+# import json
+# CLIENT_SECRETS_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'client_secrets.json')
+# decorator = OAuth2DecoratorFromClientSecrets(CLIENT_SECRETS_PATH, scope='https://www.googleapis.com/auth/bigquery')
+
+
+# def authorize_credentials():
+#
+#     flow = flow_from_clientsecrets(CLIENT_SECRETS_PATH, scope='https://www.googleapis.com/auth/bigquery')
+#     storage = Storage('bigquery_credentials.dat')
+#     credentials = storage.get()
+#
+#     if credentials is None or credentials.invalid:
+#         print '\nRun oauth2 flow with default arguments.'
+#         credentials = tools.run_flow(flow, storage, tools.argparser.parse_args([]))
+#     else:
+#         print '\ncredentials valid'
+#
+#     http = httplib2.Http()
+#     http = credentials.authorize(http)
+#
+#     service = build('bigquery', 'v2', http=http)  # developerKey, model
+#
+#     return service
+
+
+# def authorize_credentials_with_jwt():
+#
+#     PROJECT_NUMBER = '982660750330'
+#     SERVICE_ACCOUNT_EMAIL = "982660750330-88vug9a5ojumrrqksb7dndfevb4lg2q9@developer.gserviceaccount.com"
+#
+#     f = file('Authentication-Test-key.pem', 'rb')  # notasecret
+#     key = f.read()
+#     f.close()
+#
+#     credentials = SignedJwtAssertionCredentials(
+#         SERVICE_ACCOUNT_EMAIL,
+#         key,
+#         scope='https://www.googleapis.com/auth/bigquery')
+#
+#     http = httplib2.Http()
+#     http = credentials.authorize(http)
+#
+#     service = build('bigquery', 'v2')  # , http=http)
+#
+#     return service, http
